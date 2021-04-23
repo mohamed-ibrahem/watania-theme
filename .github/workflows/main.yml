@@ -46,7 +46,7 @@ jobs:
 
       - name: Verify that assets are built successfully
         run: |
-          yarn build:production
+          yarn prod
           cat public/mix-manifest.json
 
   php:
