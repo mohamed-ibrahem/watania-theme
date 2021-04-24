@@ -4,8 +4,9 @@
   position: relative;
   height: 100%;
 
-  &:before {
+  &::before {
     @apply absolute inset-y-0 left-0 bg-cover w-1/2 z-10;
+
     content: ' ';
     background-image: url(../images/header-bg.png);
     background-position: bottom right;
@@ -18,7 +19,8 @@
   .owl-nav {
     @apply relative -mt-14 space-x-6 text-center z-20;
 
-    button.owl-prev, button.owl-next {
+    button.owl-prev,
+    button.owl-next {
       @apply bg-orange hover:bg-orange-700 focus:outline-none #{!important};
 
       border-radius: 9999px !important;

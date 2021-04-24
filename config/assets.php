@@ -34,9 +34,9 @@ return [
 
     'manifests' => [
         'theme' => [
-            'path'   => get_theme_file_path( 'public' ),
-            'url'    => get_theme_file_uri( 'public' ),
-            'assets' => public_path( 'mix-manifest.json' ),
+            'path' => get_theme_file_path('public'),
+            'url' => get_theme_file_uri('public'),
+            'assets' => public_path('mix-manifest.json'),
         ]
     ]
 ];

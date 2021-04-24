@@ -5,7 +5,8 @@ namespace App\View\Components;
 use Illuminate\View\View;
 use Roots\Acorn\View\Component;
 
-class Layout extends Component {
+class Layout extends Component
+{
     /**
      * @var bool
      */
@@ -21,7 +22,8 @@ class Layout extends Component {
      *
      * @param bool $alternative
      */
-    public function __construct( bool $alternative = false ) {
+    public function __construct(bool $alternative = false)
+    {
         $this->alternative = get_field('alternative') ?: $alternative;
         $this->slides = get_field('slides');
     }
@@ -31,7 +33,8 @@ class Layout extends Component {
      *
      * @return View
      */
-    public function render() {
-        return $this->view( 'components.layout' );
+    public function render()
+    {
+        return $this->view('components.layout');
     }
 }

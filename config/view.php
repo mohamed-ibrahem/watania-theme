@@ -16,9 +16,9 @@ return [
     */
 
     'paths' => [
-        get_theme_file_path( '/resources/views' ),
-        get_parent_theme_file_path( '/resources/views' ),
-        resource_path( 'views' ),
+        get_theme_file_path('/resources/views'),
+        get_parent_theme_file_path('/resources/views'),
+        resource_path('views'),
     ],
 
     /*
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'compiled' => storage_path( 'framework/views' ),
+    'compiled' => storage_path('framework/views'),
 
     /*
     |--------------------------------------------------------------------------
