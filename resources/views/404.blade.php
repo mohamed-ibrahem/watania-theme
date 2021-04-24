@@ -1,13 +1,6 @@
-@extends('layouts.app')
-
-@section('content')
-  @include('partials.page-header')
-
-  @if (! have_posts())
-    <x-alert type="warning">
-      {!! __('Sorry, but the page you are trying to view does not exist.', 'sage') !!}
-    </x-alert>
-
-    {!! get_search_form(false) !!}
-  @endif
-@endsection
+<x-layout :alternative="true">
+  <div class="container">
+    <h1 class="text-green">404</h1>
+    <p>This page is not found!</p>
+  </div>
+</x-layout>
