@@ -1,6 +1,10 @@
 @import 'tailwindcss/base';
 
+@import 'common/owl_carousel';
+
 @import 'common/global';
+@import 'common/header';
+@import 'common/footer';
 
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';

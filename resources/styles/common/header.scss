@@ -1,0 +1,29 @@
+header {
+  .primary_menu {
+    li {
+      a {
+        @apply text-base font-medium text-white hover:text-gray-200;
+      }
+
+      &.current-menu-item {
+        a {
+          @apply text-orange hover:text-orange-600;
+        }
+      }
+    }
+
+    &--mobile {
+      li {
+        a {
+          @apply text-base font-medium -m-3 p-3 flex items-center rounded-md hover:bg-gray-50;
+        }
+
+        &.current-menu-item {
+          a {
+            @apply text-orange hover:text-orange-600;
+          }
+        }
+      }
+    }
+  }
+}

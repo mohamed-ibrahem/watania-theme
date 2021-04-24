@@ -17,7 +17,7 @@ return [
     */
 
     'defaults' => [
-        'trueFalse' => ['ui' => 1],
-        'select' => ['ui' => 1],
+        'trueFalse' => [ 'ui' => 1 ],
+        'select'    => [ 'ui' => 1 ],
     ],
 ];

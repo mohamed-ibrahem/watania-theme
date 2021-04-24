@@ -1,0 +1,14 @@
+footer {
+  .widget {
+    a {
+      @apply text-sm text-green font-medium hover:text-green-700;
+    }
+  }
+  .footer_menu {
+    li {
+      a {
+        @apply text-sm font-medium text-white hover:text-gray-200;
+      }
+    }
+  }
+}

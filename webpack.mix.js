@@ -13,8 +13,7 @@ require('@tinypixelco/laravel-mix-wp-blocks');
  */
 
 mix
-  .setPublicPath('./public')
-  .browserSync('watania.localhost');
+  .setPublicPath('./public');
 
 mix
   .sass('resources/styles/app.scss', 'styles')

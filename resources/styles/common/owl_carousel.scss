@@ -1,0 +1,36 @@
+@import '~owl.carousel/src/scss/owl.carousel';
+
+.owl-carousel {
+  position: relative;
+  height: 100%;
+
+  &:before {
+    @apply absolute inset-y-0 left-0 bg-cover w-1/2 z-10;
+    content: ' ';
+    background-image: url(../images/header-bg.png);
+    background-position: bottom right;
+  }
+
+  div:not(.owl-controls, .owl-nav) {
+    height: 100%;
+  }
+
+  .owl-nav {
+    @apply relative -mt-14 space-x-6 text-center z-20;
+
+    button.owl-prev, button.owl-next {
+      @apply bg-orange hover:bg-orange-700 focus:outline-none #{!important};
+
+      border-radius: 9999px !important;
+      border: 2px #fff solid !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 1.5rem !important;
+      color: #fff !important;
+      width: 1.5rem !important;
+      padding-bottom: 6px !important;
+      font-size: 25px !important;
+    }
+  }
+}

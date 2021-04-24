@@ -4,8 +4,7 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class App extends Composer
-{
+class App extends Composer {
     /**
      * List of views served by this composer.
      *
@@ -20,8 +19,7 @@ class App extends Composer
      *
      * @return array
      */
-    public function with()
-    {
+    public function with() {
         return [
             'siteName' => $this->siteName(),
         ];
@@ -32,8 +30,7 @@ class App extends Composer
      *
      * @return string
      */
-    public function siteName()
-    {
-        return get_bloginfo('name', 'display');
+    public function siteName() {
+        return get_bloginfo( 'name', 'display' );
     }
 }
