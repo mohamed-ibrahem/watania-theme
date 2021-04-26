@@ -10,21 +10,6 @@ jobs:
     name: 📦 Build theme assets
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup the Node environment on ${{ runner.os }}
-        uses: actions/setup-node@v2
-        with:
-          version: 14
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  test:
-
-  deploy:
-
-  build:
-    name: 📦 Build theme assets
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout the project
         uses: actions/checkout@v2
 
@@ -42,7 +27,7 @@ jobs:
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies using Yarn
+      - name: Install dependencies using NPM
         run: npm install
 
       - name: Install Composer dependencies
