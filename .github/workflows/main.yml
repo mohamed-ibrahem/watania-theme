@@ -10,6 +10,21 @@ jobs:
     name: 📦 Build theme assets
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: Setup the Node environment on ${{ runner.os }}
+        uses: actions/setup-node@v2
+        with:
+          version: 14
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+
+  deploy:
+
+  build:
+    name: 📦 Build theme assets
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout the project
         uses: actions/checkout@v2
 
@@ -20,46 +35,25 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Restore the Yarn cache directory
-        id: yarncache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarncache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package.json') }}
-          restore-keys: ${{ runner.os }}-yarn-
-
       - name: Setup the PHP environment on ${{ runner.os }}
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
-          coverage: xdebug
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Restore the Composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - uses: actions/cache@v2
-        with:
-          path: ${{ steps.composercache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-
       - name: Install dependencies using Yarn
-        run: yarn install --frozen-lockfile
+        run: npm install
 
       - name: Install Composer dependencies
         run: composer install --no-dev --no-progress --prefer-dist --optimize-autoloader --no-suggest
 
       - name: Execute the Node test scripts
-        run: yarn test
+        run: npm run test
 
       - name: Verify that assets are built successfully
         run: |
-          yarn prod
+          npm run prod
           cat public/mix-manifest.json
 
       - name: Execute the PHP lint script
@@ -67,6 +61,7 @@ jobs:
 
   deploy:
     name: 🌠 Deploy
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code
@@ -78,4 +73,4 @@ jobs:
           server: ftp.commix-me.com
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          server-dir: /alwatania.commix-me.com/wp-content/themes
+          server-dir: /alwatania.commix-me.com/wp-content/themes/
