@@ -4,27 +4,20 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  node:
-    name: Node ${{ matrix.node }}
+  build:
+    id: build-the-assets
+    name: 📦 Build theme assets
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    strategy:
-      matrix:
-        node: ['12.14.0', '14']
-
     steps:
       - name: Checkout the project
         uses: actions/checkout@v2
 
-      - name: Setup the Node ${{ matrix.node }} environment on ${{ runner.os }}
+      - name: Setup the Node environment on ${{ runner.os }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
+          version: 14
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -35,36 +28,13 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ${{ steps.yarncache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.node }}-yarn-
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package.json') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
-      - name: Install dependencies using Yarn
-        run: yarn install --frozen-lockfile
-
-      - name: Execute the Node test scripts
-        run: yarn test
-
-      - name: Verify that assets are built successfully
-        run: |
-          yarn prod
-          cat public/mix-manifest.json
-
-  php:
-    name: PHP ${{ matrix.php }}
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    strategy:
-      matrix:
-        php: ['7.3', '7.4', '8.0']
-
-    steps:
-      - name: Checkout the project
-        uses: actions/checkout@v2
-
-      - name: Setup the PHP ${{ matrix.php }} environment on ${{ runner.os }}
+      - name: Setup the PHP environment on ${{ runner.os }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 7.4
           coverage: xdebug
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,11 +46,38 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ${{ steps.composercache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php }}-composer-
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies using Yarn
+        run: yarn install --frozen-lockfile
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader --no-suggest
+        run: composer install --no-dev --no-progress --prefer-dist --optimize-autoloader --no-suggest
+
+      - name: Execute the Node test scripts
+        run: yarn test
+
+      - name: Verify that assets are built successfully
+        run: |
+          yarn prod
+          cat public/mix-manifest.json
 
       - name: Execute the PHP lint script
         run: composer run-script lint
+
+  deploy:
+    name: 🌠 Deploy
+    runs-on: ubuntu-latest
+    de
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2.3.2
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.commix-me.com
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: /alwatania.commix-me.com/wp-content/themes
